@@ -1,0 +1,43 @@
+body {
+    background-color: #ecf0f1;
+}
+
+.btn {
+    cursor: pointer;
+}
+body{
+   color:#ffffff;
+}
+
+.clicked{
+    color:#7f8c8d;
+}
+
+.form,
+.greetings{
+    display: none;
+}
+
+.showing{
+    display: block; /*한 줄 차지*/
+}
+
+
+@keyframes fadeIn{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
+.bgImage{
+    position: absolute; /*원하는 위치에 지정*/
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    animation: fadeIn .5s linear;
+}
