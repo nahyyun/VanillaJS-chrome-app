@@ -1,17 +1,23 @@
 body {
     width: 100vw;
     height: 100vh;
+    display: grid;
+    place-items: center;
+    grid-template-rows: 10% 90%;
+    margin: 0;
+    
     position: relative;
     color: ghostwhite;
     font-size:20px;
-    margin: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+
     overflow:scroll;
     -ms-overflow-style: none;
-    background-position: center;
+
+    background-position: contain;
     background-repeat: repeat;
-    background-size: 100% 100%;
+    background-size: 100% 100vh;
     animation: fadeIn .5s linear;
-    font-family: 'Noto Sans KR', sans-serif;
 }
 
 body::-webkit-scrollbar{ 
@@ -19,18 +25,13 @@ body::-webkit-scrollbar{
 }
 
 content {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    place-items: center;
 }
 
 .clock {
-    font-size: 90px;
+    font-size: 80px;
     font-weight: 500;
-    margin: 30px 0;
 }
 
 .weather {
@@ -42,7 +43,6 @@ content {
 
 .weather .place {
     font-weight: 500;
-    font-size: 20px;
 }
 
 .weather .temp {
@@ -53,6 +53,7 @@ content {
 .greeting {
     font-size: 30px;
     text-align: center;
+    margin-top: 20px;
 }
 
 .greeting-input{
@@ -63,7 +64,7 @@ content {
     width: 100%;
     margin: 40px 0;
     color: ghostwhite;
-    font-size: 20px;
+    font-size: 25px;
 }
 
 ul {
@@ -72,10 +73,9 @@ ul {
 }
 
 TodoWrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    place-items: center;
+    max-height: 200px;
 }
 
 .todo-input {
@@ -85,15 +85,20 @@ TodoWrapper {
     width: 400px;
     height: 45px;
     font-size: 17px;
-    margin: 20px 0;
+    margin-top: 30px;
     outline: none;
 }
 
+.todo-input::placeholder {
+    font-style: italic;
+}
+
 .todo-list-wrapper {
-    padding: 20px 30px;
-    margin-top: 50px;
+    padding: 10px 30px;
+    margin-top: 20px;
     max-height: 250px;
-    width: 150%;
+    min-width: 600px;
+    max-width: 700px;
     overflow: scroll;
     -ms-overflow-style: none;
 }
@@ -108,18 +113,17 @@ TodoWrapper {
 }
 
 .list-box {
-    margin: 40px 0;
+    margin-top: 40px;
 }
 
-.list-box >li{
+.list-box > li{
     display: grid;
     grid-template-columns: 10% 70% 20%;
     margin: 15px 0;
 }
 
-.list-box >li > input {
+.list-box > li > input {
     margin: auto;
-    width: 13px;
 }
 
 .list-box > li > label {

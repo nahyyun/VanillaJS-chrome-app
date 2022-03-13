@@ -1,5 +1,4 @@
 import Component from "../core/component.js";
-import { $ } from '../utils/dom.js';
 
 export default class NameInput extends Component{
     
@@ -15,8 +14,8 @@ export default class NameInput extends Component{
         
         this.$target.addEventListener('keyup', (e)=>{
             if(e.key !== 'Enter') return;
-            if(!$(`.${this.$target.className}-input`).value) return;
-            setUser($(`.${this.$target.className}-input`).value);
+            if(!e.target.value) return;
+            setUser(e.target.value);
             renderName();
         });
     }

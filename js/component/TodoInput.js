@@ -1,4 +1,3 @@
-import { $ } from '../utils/dom.js';
 import Component from '../core/component.js';
 
 export default class TodoInput extends Component{
@@ -11,15 +10,12 @@ export default class TodoInput extends Component{
     }
 
     event(){
-        const { user, addTodo } = this.props;
+        const { addTodo } = this.props;
+        
         this.$target.addEventListener('keyup', (e)=>{
             if(e.key !== 'Enter') return;
-            if(!user) {
-                window.alert('이름을 먼저 입력해주세요!');
-                return;
-            }
-            if(!$(`.${this.$target.className}-input`).value) return;
-            addTodo($(`.${this.$target.className}-input`).value);
+            if(!e.target.value) return;
+            addTodo(e.target.value);
         });
     }
 

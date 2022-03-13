@@ -20,7 +20,7 @@ class App extends Component {
         return `
         <header>
             <div class="weather"></div>
-        <header>
+        </header>
         <content>
             <span class="clock"></span>
             <div class="greeting"></div>
@@ -53,7 +53,6 @@ class App extends Component {
         
         new TodoInput({ target: $('.todo'), 
                         props: {
-                            user : this.state.user,
                             placeholder: 'write a todo', 
                             addTodo: this.addTodo.bind(this)
                         }
@@ -116,11 +115,11 @@ class App extends Component {
                     lat: position.coords.latitude,
                     lon: position.coords.longitude
                 }
-                resolve(coordsObj);
-                }, (err) => {
+                resolve(coordsObj)
+            }, 
+            (err) => {
                 reject(console.log(err.message))
-                }
-            )
+            })
         })
     }
 
@@ -150,7 +149,7 @@ class App extends Component {
     }
 
     renderName(){
-        $('.greeting').innerHTML = `<h3 class="greeting-title">Hello ${getStorage(USER_LS)}!</h3>`;
+        $('.greeting').innerHTML = `<span class="greeting-title">Hello ${getStorage(USER_LS)} !</span>`;
         $('TodoWrapper').classList.toggle('hide');
     }
 }

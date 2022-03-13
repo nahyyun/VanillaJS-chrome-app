@@ -12,8 +12,8 @@ export default class Clock extends Component{
     const hours = date.getHours();
     const seconds = date.getSeconds();
   
-    return `${hours < 10 ? `0${hours}` : hours}:${
-      minutes < 10 ? `0${minutes}` : minutes}:${
+    return `${hours < 10 ? `0${hours}` : hours} : ${
+      minutes < 10 ? `0${minutes}` : minutes} : ${
       seconds < 10 ? `0${seconds}` : seconds}`;
   }
   start(){
