@@ -1,27 +1,150 @@
 body {
-    background-color: #ecf0f1;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    color: ghostwhite;
+    font-size:20px;
+    margin: 0;
+    overflow:scroll;
+    -ms-overflow-style: none;
+    background-position: center;
+    background-repeat: repeat;
+    background-size: 100% 100%;
+    animation: fadeIn .5s linear;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+body::-webkit-scrollbar{ 
+    display:none;
+}
+
+content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.clock {
+    font-size: 90px;
+    font-weight: 500;
+    margin: 30px 0;
+}
+
+.weather {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    text-align: center;
+}
+
+.weather .place {
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.weather .temp {
+    font-weight: 300;
+    font-size: 15px;
+}
+
+.greeting {
+    font-size: 30px;
+    text-align: center;
+}
+
+.greeting-input{
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #CCC;
+    outline: none;
+    width: 100%;
+    margin: 40px 0;
+    color: ghostwhite;
+    font-size: 20px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+TodoWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.todo-input {
+    border: 1px solid transparent;
+    border-radius: 100px;
+    opacity: .3;
+    width: 400px;
+    height: 45px;
+    font-size: 17px;
+    margin: 20px 0;
+    outline: none;
+}
+
+.todo-list-wrapper {
+    padding: 20px 30px;
+    margin-top: 50px;
+    max-height: 250px;
+    width: 150%;
+    overflow: scroll;
+    -ms-overflow-style: none;
+}
+
+.todo-list-wrapper::-webkit-scrollbar{ 
+    display:none;
+}
+
+.sub-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.list-box {
+    margin: 40px 0;
+}
+
+.list-box >li{
+    display: grid;
+    grid-template-columns: 10% 70% 20%;
+    margin: 15px 0;
+}
+
+.list-box >li > input {
+    margin: auto;
+    width: 13px;
+}
+
+.list-box > li > label {
+    word-break: break-all;
+    font-size: 16px;
 }
 
 .btn {
     cursor: pointer;
-}
-body{
-   color:#ffffff;
-}
-
-.clicked{
-    color:#7f8c8d;
+    background-color: transparent;
+    border: transparent;
+    color: ghostwhite;
 }
 
-.form,
-.greetings{
+.li-btns {
+    margin: auto;
+}
+
+.done {
+    text-decoration: line-through;
+}
+
+.hide {
     display: none;
 }
-
-.showing{
-    display: block; /*한 줄 차지*/
-}
-
 
 @keyframes fadeIn{
     from{
@@ -30,14 +153,4 @@ body{
     to{
         opacity: 1;
     }
-}
-
-.bgImage{
-    position: absolute; /*원하는 위치에 지정*/
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    animation: fadeIn .5s linear;
 }
