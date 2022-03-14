@@ -81,7 +81,7 @@ TodoWrapper {
 .todo-input {
     border: 1px solid transparent;
     border-radius: 100px;
-    opacity: .3;
+    opacity: .4;
     width: 400px;
     height: 45px;
     font-size: 17px;
