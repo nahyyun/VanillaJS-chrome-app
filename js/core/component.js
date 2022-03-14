@@ -19,10 +19,11 @@ export default class Component {
         this.$target.innerHTML = this.template();
         this.componentDidMount();
     }
-    event(){
-    }
+    
+    event(){}
+
     setState(newData){
-        this.state = {...this.state, ...newData};
+        this.state = {...newData};
         this.render();
     }
 }

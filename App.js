@@ -70,7 +70,7 @@ class App extends Component {
     }
    
     setData(LS_NAME, key, data){
-        this.setState({[key]: data});
+        this.setState({...this.deepCopy(this.state), [key]: data});
         setStorage(LS_NAME, this.state[key]);
     }
 
@@ -79,28 +79,27 @@ class App extends Component {
     }
 
     addTodo(value){
-        const todos = [...this.state.todos];
+        const todos = this.deepCopy(this.state.todos);
         this.setData(TODO_LS, 'todos', [...todos, {id: Date.now(), title: value, done: false}]);
     }
 
     completeTodo(id){
-        const todos = [...this.state.todos];
+        const todos = this.deepCopy(this.state.todos);
         const findIdx = todos.findIndex(todo => todo.id == id);
         todos[findIdx].done = !todos[findIdx].done;
-        this.setData(TODO_LS, 'todos', [ ...todos]);
-
+        this.setData(TODO_LS, 'todos', todos);
     }
     
     editTodo(id, value){
-        const todos = [...this.state.todos];
+        const todos = this.deepCopy(this.state.todos);
         const findIdx = todos.findIndex(todo => todo.id == id);
         todos[findIdx].title = value;
-        this.setData(TODO_LS, 'todos', [...todos]);
+        this.setData(TODO_LS, 'todos', todos);
     }
 
     deleteTodo(id){
         const todos = this.state.todos.filter(todo => todo.id != id)
-        this.setData(TODO_LS, 'todos', [...todos]);
+        this.setData(TODO_LS, 'todos', todos);
     }
 
     deleteAllTodo(){
@@ -128,10 +127,11 @@ class App extends Component {
        
         res.json()
             .then(json => {
-                this.setState({weather: {
-                                    temp: json.main.temp, 
-                                    place: json.name
-                                }
+                this.setState({...this.deepCopy(this.state),
+                        weather: {
+                            temp: json.main.temp, 
+                            place: json.name
+                        }
                 });
         })
     }
@@ -151,6 +151,23 @@ class App extends Component {
     renderName(){
         $('.greeting').innerHTML = `<span class="greeting-title">Hello ${getStorage(USER_LS)} !</span>`;
         $('TodoWrapper').classList.toggle('hide');
+    }
+
+    deepCopy(obj){
+
+        if( obj == null) return;
+        
+        let copy = Array.isArray(obj) ? [] : {};
+
+        for(let key in obj){
+
+            if(typeof obj[key] == 'object') {
+                copy[key] = this.deepCopy(obj[key]);
+            }else {
+                copy[key] = obj[key];
+            }
+        }
+        return copy;
     }
 }
 
