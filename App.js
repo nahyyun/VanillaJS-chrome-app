@@ -117,23 +117,23 @@ class App extends Component {
                 resolve(coordsObj)
             }, 
             (err) => {
-                reject(console.log(err.message))
+                reject(new Error(err.message))
             })
         })
     }
 
     async getWeather({lat, lon}){
         const res = await fetch( `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`)
-       
+        
         res.json()
-            .then(json => {
+            .then(data => {
                 this.setState({...this.deepCopy(this.state),
                         weather: {
-                            temp: json.main.temp, 
-                            place: json.name
+                            temp: data.main.temp, 
+                            place: data.name
                         }
                 });
-        })
+            }).catch(error => new Error(error));
     }
 
     async loadCoords(){
