@@ -10,13 +10,12 @@ export default class NameInput extends Component{
     }
 
     event(){
-        const { setUser, renderName } = this.props;
+        const { setUser } = this.props;
         
         this.$target.addEventListener('keyup', (e)=>{
             if(e.key !== 'Enter') return;
             if(!e.target.value) return;
             setUser(e.target.value);
-            renderName();
         });
     }
 }

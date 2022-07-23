@@ -23,7 +23,7 @@ export default class Component {
     event(){}
 
     setState(newData){
-        this.state = {...newData};
+        this.state = {...this.state, ...newData};
         this.render();
     }
 }

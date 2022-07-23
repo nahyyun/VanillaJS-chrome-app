@@ -33,77 +33,101 @@ class App extends Component {
     }
 
     componentDidMount(){
-        new Clock({ target: $('.clock') });
-
-        new Weather({ target: $('.weather'),
-                      props: { 
-                          weather: this.state.weather
-                     }     
+        new Clock({ 
+            target: $('.clock') 
         });
 
-        (getStorage(USER_LS)) ? 
-        this.renderName()
-        :
-        new NameInput({ target: $('.greeting'), 
-                        props: {
-                            setUser: this.setUser.bind(this),
-                            renderName: this.renderName
-                        }
+        new Weather({
+            target: $('.weather'),
+            props: { 
+                weather: this.state.weather
+            }     
         });
         
-        new TodoInput({ target: $('.todo'), 
-                        props: {
-                            placeholder: 'write a todo', 
-                            addTodo: this.addTodo.bind(this)
-                        }
-        });  
-        
-       new TodoList({target: $('.todo-list-wrapper'),
-                     props: {
-                        todoList: this.state.todos,
-                        completeTodo: this.completeTodo.bind(this),
-                        editTodo: this.editTodo.bind(this),
-                        deleteTodo: this.deleteTodo.bind(this),
-                        deleteAllTodo: this.deleteAllTodo.bind(this)
-                    }
-        })
-    }
-   
-    setData(LS_NAME, key, data){
-        this.setState({...this.deepCopy(this.state), [key]: data});
-        setStorage(LS_NAME, this.state[key]);
+        if(!this.state.user) {
+            new NameInput({
+                target: $('.greeting'), 
+                props: {
+                    setUser: this.setUser.bind(this)
+                }
+            });
+        }
+        else{
+            this.renderName();
+
+            new TodoInput({ 
+                target: $('.todo'), 
+                props: {
+                    placeholder: 'write a todo', 
+                    addTodo: this.addTodo.bind(this)
+                }
+            });  
+            
+            new TodoList({
+                target: $('.todo-list-wrapper'),
+                props: {
+                    todoList: this.state.todos,
+                    completeTodo: this.completeTodo.bind(this),
+                    editTodo: this.editTodo.bind(this),
+                    deleteTodo: this.deleteTodo.bind(this),
+                    deleteAllTodo: this.deleteAllTodo.bind(this)
+                }
+            })
+        }
     }
 
     setUser(value){ 
-        this.setData(USER_LS, 'user', value);
+        this.setState({user: value});
+        setStorage(USER_LS, this.state.user);
     }
 
     addTodo(value){
-        const todos = this.deepCopy(this.state.todos);
-        this.setData(TODO_LS, 'todos', [...todos, {id: Date.now(), title: value, done: false}]);
+        this.setState({
+            todos: [
+                ...this.state.todos,
+                {id: Date.now(), title: value, done: false}
+            ]
+        });
+        setStorage(TODO_LS, this.state.todos);
     }
 
     completeTodo(id){
-        const todos = this.deepCopy(this.state.todos);
-        const findIdx = todos.findIndex(todo => todo.id == id);
-        todos[findIdx].done = !todos[findIdx].done;
-        this.setData(TODO_LS, 'todos', todos);
+        const todos = this.state.todos.map(todo => 
+            todo.id === Number(id) ? { ...todo, done: !todo.done } : todo);
+        this.setState({
+            todos: [
+                ...todos
+            ]
+        })
+        setStorage(TODO_LS, this.state.todos);
     }
     
     editTodo(id, value){
-        const todos = this.deepCopy(this.state.todos);
-        const findIdx = todos.findIndex(todo => todo.id == id);
-        todos[findIdx].title = value;
-        this.setData(TODO_LS, 'todos', todos);
+        const todos = this.state.todos.map(todo => 
+            todo.id === Number(id) ? {...todo, title: value} : todo);
+        this.setState({
+            todos: [
+                ...todos
+            ]
+        })
+        setStorage(TODO_LS, this.state.todos);
     }
 
     deleteTodo(id){
-        const todos = this.state.todos.filter(todo => todo.id != id)
-        this.setData(TODO_LS, 'todos', todos);
+        const todos = this.state.todos.filter(todo => todo.id !== Number(id));
+        this.setState({
+            todos: [
+                ...todos
+            ]
+        })
+        setStorage(TODO_LS, this.state.todos);
     }
 
     deleteAllTodo(){
-        this.setData(TODO_LS, 'todos', []);
+        this.setState({
+            todos: []
+        })
+        setStorage(TODO_LS, this.state.todos);
     }
 
     askForCoords(){
@@ -113,11 +137,11 @@ class App extends Component {
                 const coordsObj = {
                     lat: position.coords.latitude,
                     lon: position.coords.longitude
-                }
-                resolve(coordsObj)
+                };
+                resolve(coordsObj);
             }, 
             (err) => {
-                reject(new Error(err.message))
+                reject(new Error(err.message));
             })
         })
     }
@@ -127,11 +151,12 @@ class App extends Component {
         
         res.json()
             .then(data => {
-                this.setState({...this.deepCopy(this.state),
-                        weather: {
-                            temp: data.main.temp, 
-                            place: data.name
-                        }
+                this.setState({
+                    weather: {
+                        ...this.state.weather,
+                        temp: data.main.temp, 
+                        place: data.name
+                    }
                 });
             }).catch(error => new Error(error));
     }
@@ -149,25 +174,8 @@ class App extends Component {
     }
 
     renderName(){
-        $('.greeting').innerHTML = `<span class="greeting-title">Hello ${getStorage(USER_LS)} !</span>`;
+        $('.greeting').innerHTML = `<span class="greeting-title">Hello ${this.state.user} !</span>`;
         $('TodoWrapper').classList.toggle('hide');
-    }
-
-    deepCopy(obj){
-
-        if( obj == null) return;
-        
-        let copy = Array.isArray(obj) ? [] : {};
-
-        for(let key in obj){
-
-            if(typeof obj[key] == 'object') {
-                copy[key] = this.deepCopy(obj[key]);
-            }else {
-                copy[key] = obj[key];
-            }
-        }
-        return copy;
     }
 }
 

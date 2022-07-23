@@ -36,8 +36,8 @@ export default class TodoList extends Component{
            if(!e.target.classList.contains('btn')) return;
 
            if(e.target.classList.contains('deleteAllBtn')){
-            deleteAllTodo();
-            return;
+                deleteAllTodo();
+                return;
             }
 
            const $li = e.target.closest('li');
@@ -50,7 +50,7 @@ export default class TodoList extends Component{
            }
            if(e.target.classList.contains('editBtn')){
                const newValue = window.prompt('내용을 입력해주세요!', prevValue);
-               if(!newValue || newValue == prevValue) return;
+               if(!newValue || newValue === prevValue) return;
                editTodo(todoId, newValue);
                return;
            }
